@@ -1,19 +1,31 @@
 package com.example.asynchronousTaskProcessing.data;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.stereotype.Component;
 
-@Component
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Task {
 
-    private long id;
-    public int exponent;
-    public int base;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private int exponent;
+    private int base;
 
-    public Task(long id, int exponent, int base) {
-        this.id = id;
-        this.exponent = exponent;
-        this.base = base;
+    public int result(){
+        return this.base ^ this.exponent;
     }
-
 
 }
