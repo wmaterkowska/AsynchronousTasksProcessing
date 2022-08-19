@@ -1,4 +1,4 @@
-package com.example.asynchronousTaskProcessing;
+package com.example.asynchronous;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
