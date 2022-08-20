@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List of Tasks</title>
+</head>
+<body>
+
+<table>
+  <tr>
+    <td>Task</td>
+    <td>Status</td>
+  </tr>
+  <tr th:each="task: ${tasks}">
+    <td th:text="${task.toString()}">Id</td>
+    <td th:text="${task.getResult()}">result</td>
+  </tr>
+</table>
+
+</body>
+</html>

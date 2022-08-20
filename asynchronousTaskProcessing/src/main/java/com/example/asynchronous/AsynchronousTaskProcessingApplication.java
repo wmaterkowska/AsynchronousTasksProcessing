@@ -16,14 +16,5 @@ public class AsynchronousTaskProcessingApplication {
 
 		SpringApplication.run(AsynchronousTaskProcessingApplication.class, args);
 	}
-	@Bean
-	public Executor taskExecutor() {
-		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-		executor.setCorePoolSize(2);
-		executor.setMaxPoolSize(2);
-		executor.setQueueCapacity(500);
-		executor.setThreadNamePrefix("TaskStatus-");
-		executor.initialize();
-		return executor;
-	}
+
 }

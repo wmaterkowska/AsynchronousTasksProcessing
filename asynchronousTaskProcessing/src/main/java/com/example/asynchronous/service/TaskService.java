@@ -1,49 +1,42 @@
 package com.example.asynchronous.service;
 
 import com.example.asynchronous.data.Task;
-import com.example.asynchronous.data.TaskRepository;
-import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
+@Service
 public class TaskService {
 
-    private TaskRepository taskRepository;
-    private Task task;
+    private List<Task> taskList;
 
-    @PostConstruct
-    void test(){
-        taskRepository.save(new Task());
-
+    public TaskService(List<Task> taskList) {
+        this.taskList = taskList;
     }
 
     public List<Task> listAllTasks(){
-        return taskRepository.findAll();
+        return this.taskList;
     }
 
     public void addTask(Task task){
-        taskRepository.save(task);
+        this.taskList.add(task);
     }
 
-
-    @Async
-    public void statusOfTask()
-            throws InterruptedException, ExecutionException {
-        System.out.println("Processing the task "
-                + Thread.currentThread().getName());
-        Future<String> future = task.resultOfTask();
-
-        while (true) {
-            if (future.isDone()) {
-                System.out.println("Result from asynchronous process - " + future.get());
-                break;
-            }
-            System.out.println("Continue doing something else. ");
-            Thread.sleep(1000);
+    public List<Integer> statusesList(List<Task> taskList) {
+        List<Integer> statusList = new ArrayList<>();
+        for (Task task: this.taskList) {
+            statusList.add(task.getStatus());
         }
+        return statusList;
+    }
+
+    public List<Long> resultsList(List<Task> taskList) {
+        List<Long> resultList = new ArrayList<>();
+        for (Task task: this.taskList) {
+            resultList.add(task.getResult());
+        }
+        return resultList;
     }
 
 
