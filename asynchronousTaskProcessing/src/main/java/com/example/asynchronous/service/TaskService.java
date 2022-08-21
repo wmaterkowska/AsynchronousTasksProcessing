@@ -1,6 +1,8 @@
 package com.example.asynchronous.service;
 
 import com.example.asynchronous.data.Task;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -8,6 +10,7 @@ import java.util.List;
 
 @Service
 public class TaskService {
+
 
     private List<Task> taskList;
 
