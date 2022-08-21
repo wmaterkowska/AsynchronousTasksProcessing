@@ -15,7 +15,7 @@ public class TaskServiceTests {
     private TaskService taskService;
 
     @Test
-    public void listAllTasksTest(){
+    public void listAllTasksTest() throws InterruptedException {
         assertNull(this.taskService.listAllTasks());
     }
 }

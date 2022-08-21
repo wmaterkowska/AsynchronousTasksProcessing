@@ -2,8 +2,10 @@ package com.example.asynchronous.api;
 
 import com.example.asynchronous.data.Task;
 import com.example.asynchronous.service.TaskService;
+import org.hibernate.loader.entity.NaturalIdEntityJoinWalker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,25 +19,16 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
+    @Async
     @RequestMapping(path="/", method = RequestMethod.POST)
-    public String addTask(@RequestParam(value = "base") Integer base, @RequestParam(value = "exponent") Integer exponent){
+    public void addTask(@RequestParam(value = "base") Integer base, @RequestParam(value = "exponent") Integer exponent) throws InterruptedException {
         final Task newTask = new Task(base,exponent);
         this.taskService.addTask(newTask);
-        return "task added";
+        newTask.calculateResult();
     }
 
-//    @PostMapping(value="/", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public void addTaskByBody(@RequestBody Task task){
-//        this.taskService.addTask(task);
-//    }
-
-//    @RequestMapping(path="/tasks", method = RequestMethod.GET)
-//    public String getTasks(Model model){
-//    model.addAttribute("tasks", this.taskService.listAllTasks());
-//        return "tasks";
-//    }
-
     @GetMapping(path = "/tasks")
-    public List<Task> getTasks(){return this.taskService.listAllTasks();}
+    public List<Task> getTasks() {
+        return this.taskService.listAllTasks();}
 
 }

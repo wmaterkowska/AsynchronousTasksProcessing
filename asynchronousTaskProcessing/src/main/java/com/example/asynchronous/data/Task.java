@@ -19,15 +19,16 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@EnableAsync
 public class Task {
 
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private int base;
     private int exponent;
 
-    private int status;
+    private float status;
 
     private long result;
 
@@ -36,43 +37,23 @@ public class Task {
         this.exponent = exponent;
     }
 
-    public Long getId() {return id;}
+    public Long getId() {return this.id;}
 
-    public int getBase() {
-        return base;
-    }
+    public int getBase() {return this.base;}
 
-    public int getExponent() {
-        return exponent;
-    }
+    public int getExponent() {return this.exponent;}
 
-    @Autowired
-    public int getStatus() {
-        return this.status;
-    }
+    public float getStatus() {return this.status;}
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
+    public long getResult() {return this.result;}
 
-    @Autowired
-    public long getResult() {
-        return this.result;
-    }
-
-    public void setResult(long result) {
-        this.result = result;
-    }
-
-    @Autowired
+    @Async
     public void calculateResult() throws InterruptedException {
         this.result = base;
         for (int i = 1; i <= exponent; i++){
-            this.status = i / exponent * 100;
-            setStatus(this.status);
-            Thread.sleep(1000);
+            this.status = ( (float) i / exponent) * 100;
             this.result = base * this.result;
-            setResult(this.result);
+            Thread.sleep(1000);
         }
     }
 
