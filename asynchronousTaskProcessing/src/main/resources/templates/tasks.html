@@ -11,7 +11,7 @@
     <td>Task</td>
     <td>Base</td>
     <td>Exponent</td>
-    <td>Status</td>
+    <td>Status [%]</td>
     <td>Result</td>
   </tr>
   <tr th:each="task: ${tasks}">
@@ -19,7 +19,10 @@
     <td th:text="${task.getBase}">taskId</td>
     <td th:text="${task.getExponent}">taskId</td>
     <td th:text="${task.getStatus}">status</td>
-    <td th:text="${task.getResult}">result</td>
+    <td>
+      <span th:if="${task.getStatus != 100}">UNKNOWN</span>
+      <span th:unless="${task.getStatus != 100}" th:text="${task.getResult}">result</span>
+    </td>
   </tr>
 </table>
 

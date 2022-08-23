@@ -1,19 +1,22 @@
 package com.example.asynchronous;
 
 import com.example.asynchronous.api.TaskController;
-import com.example.asynchronous.data.Task;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class DemoApplicationTests {
+class AsynchronousApplicationTests {
 
+	@Autowired
 	private TaskController controller;
+
 	@Test
-	void contextLoads() {
+	void contextLoads() throws Exception{
+		assertThat(controller).isNotNull();
 	}
 
 }
