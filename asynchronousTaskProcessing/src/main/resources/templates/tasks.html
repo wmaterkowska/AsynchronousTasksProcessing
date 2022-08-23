@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List of Tasks</title>
+</head>
+<body>
+
+<table>
+  <tr>
+    <td>Task</td>
+    <td>Base</td>
+    <td>Exponent</td>
+    <td>Status [%]</td>
+    <td>Result</td>
+  </tr>
+  <tr th:each="task: ${tasks}">
+    <td th:text="${task.getId}">taskId</td>
+    <td th:text="${task.getBase}">taskId</td>
+    <td th:text="${task.getExponent}">taskId</td>
+    <td th:text="${task.getStatus}">status</td>
+    <td>
+      <span th:if="${task.getStatus != 100}">UNKNOWN</span>
+      <span th:unless="${task.getStatus != 100}" th:text="${task.getResult}">result</span>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
