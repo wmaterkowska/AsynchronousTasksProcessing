@@ -9,7 +9,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -24,7 +23,6 @@ public class TaskServiceTests {
     @Test
     @Order(1)
     public void listAllTasksTest() {
-        //TaskService taskService1 = new TaskService(this.tasksList);
         assertNull(this.taskService.listAllTasks());
     }
 

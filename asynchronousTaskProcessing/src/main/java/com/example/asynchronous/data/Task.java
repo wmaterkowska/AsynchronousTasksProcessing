@@ -4,9 +4,6 @@ import lombok.*;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 
-
-import java.util.Random;
-
 @Data
 @ToString
 @AllArgsConstructor
@@ -25,7 +22,6 @@ public class Task {
     private long result;
 
     public Task(int base, int exponent) {
-        //this.id = new Random().nextLong();
         this.base = base;
         this.exponent = exponent;
     }

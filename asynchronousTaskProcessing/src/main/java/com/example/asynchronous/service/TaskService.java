@@ -13,7 +13,7 @@ public class TaskService {
 
     private List<Task> taskList;
 
-    private int counter;
+    private static volatile int counter;
 
 
     public TaskService(List<Task> taskList) {this.taskList = taskList;}
@@ -24,11 +24,8 @@ public class TaskService {
 
     @Async
     public void addTask(int base, int exponent) throws InterruptedException {
-        final Task newTask = new Task(base, exponent);
+        final Task newTask = Task.builder().id(++counter).base(base).exponent(exponent).build();
         this.taskList.add(newTask);
-
-        counter += 1;
-        newTask.setId(counter);
 
         newTask.calculateResult();
     }
