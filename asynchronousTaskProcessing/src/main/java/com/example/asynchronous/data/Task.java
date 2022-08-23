@@ -21,11 +21,6 @@ public class Task {
 
     private long result;
 
-    public Task(int base, int exponent) {
-        this.base = base;
-        this.exponent = exponent;
-    }
-
     @Async
     public void calculateResult() throws InterruptedException {
         long currentResult = 1;
