@@ -16,9 +16,7 @@ public class Task {
     private long id;
     private int base;
     private int exponent;
-
     private float status;
-
     private long result;
 
     @Async
