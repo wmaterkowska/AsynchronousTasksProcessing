@@ -13,7 +13,6 @@ class AsynchronousApplicationTests {
 	@Autowired
 	private TaskHtmlController controller;
 
-
 	@Test
 	void contextLoads() throws Exception{
 		assertThat(controller).isNotNull();
