@@ -9,21 +9,21 @@ public class TaskTests {
 
     @Test
     public void calculateResultTest() throws InterruptedException {
-        Task task = new Task(2, 3);
+        Task task = Task.builder().base(2).exponent(3).build();
         task.calculateResult();
         assertEquals(8, task.getResult());
     }
 
     @Test
     public void calculateResultTestWithExponentZero() throws InterruptedException {
-        Task task = new Task(2, 0);
+        Task task = Task.builder().base(2).exponent(0).build();
         task.calculateResult();
         assertEquals(1, task.getResult());
     }
 
     @Test
     public void calculateResultTestWithBaseZero() throws InterruptedException {
-        Task task = new Task(0, 15);
+        Task task = Task.builder().base(0).exponent(15).build();
         task.calculateResult();
         assertEquals(0, task.getResult());
     }
