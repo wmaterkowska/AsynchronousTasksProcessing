@@ -2,8 +2,6 @@ package com.example.asynchronous.service;
 
 import com.example.asynchronous.data.Task;
 import com.example.asynchronous.data.TaskRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
@@ -17,8 +15,11 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
 
-    public TaskService(TaskRepository taskRepository) {
+    private final List<Task> tasks;
+
+    public TaskService(TaskRepository taskRepository, List<Task> tasks) {
         this.taskRepository = taskRepository;
+        this.tasks = tasks;
     }
 
     public List<Task> listAllTasks() {
@@ -27,9 +28,8 @@ public class TaskService {
 
     public List<Task> getAllTasks() {
 
-        //updateTasks();
-        for (Task task : taskRepository.findAll()) {
-            updateStatus(task.getId(), task.getStatus());
+        for (Task task : this.tasks) {
+            updateTask(task.getId(), task.getStatus(), task.getResult());
         }
 
         Iterable<Task> tasks = this.taskRepository.findAll();
@@ -43,22 +43,13 @@ public class TaskService {
     public void addTask(int base, int exponent) throws InterruptedException {
         final Task newTask = Task.builder().base(base).exponent(exponent).build();
         this.taskRepository.save(newTask);
+        this.tasks.add(newTask);
 
         newTask.calculateResult();
     }
 
-
-    private void updateTasks(){
-        for (Task task: taskRepository.findAll()) {
-            float currentStatus = task.getStatus();
-            task.setStatus(currentStatus);
-            task.setResult(2);
-
-        }
-    }
-
-    public void updateStatus(long id, float status) {
-        taskRepository.updateStatus(id, status);
+    public void updateTask(long id, float status, long result) {
+        taskRepository.updateTask(id, status, result);
     }
 
 }

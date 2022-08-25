@@ -1,16 +1,14 @@
 package com.example.asynchronous.data;
 
 import lombok.*;
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name="TASK")
+@Table
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,16 +17,16 @@ import javax.persistence.*;
 public class Task {
 
     @Id
-    @Column(name="ID")
+    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name="BASE")
+    @Column
     private int base;
-    @Column(name="EXPONENT")
+    @Column
     private int exponent;
-    @Column(name="STATUS")
+    @Column
     private float status;
-    @Column(name="RESULT")
+    @Column
     private long result;
 
     public long getId() {return this.id;}
@@ -41,13 +39,6 @@ public class Task {
 
     public long getResult() {return this.result;}
 
-    public void setStatus(float status) {
-        this.status = status;
-    }
-
-    public void setResult(long result) {
-        this.result = result;
-    }
 
     @Async
     public void calculateResult() throws InterruptedException {
