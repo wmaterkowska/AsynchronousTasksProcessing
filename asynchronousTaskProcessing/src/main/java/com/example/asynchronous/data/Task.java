@@ -1,6 +1,9 @@
 package com.example.asynchronous.data;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 
@@ -28,26 +31,35 @@ public class Task {
     @Column(name="RESULT")
     private long result;
 
-    public long getId() {return id;}
+    public long getId() {return this.id;}
 
-    public int getBase() {return base;}
+    public int getBase() {return this.base;}
 
-    public int getExponent() {return exponent;}
+    public int getExponent() {return this.exponent;}
 
-    public float getStatus() {return status;}
+    public float getStatus() {return this.status;}
 
-    public long getResult() {return result;}
+    public long getResult() {return this.result;}
+
+    public void setStatus(float status) {
+        this.status = status;
+    }
+
+    public void setResult(long result) {
+        this.result = result;
+    }
 
     @Async
     public void calculateResult() throws InterruptedException {
         long currentResult = 1;
-        for (int i = 1; i <= exponent; i++){
+        for (int i = 1; i <= this.exponent; i++){
             Thread.sleep(1000);
-            this.status = ( (float) i / exponent) * 100;
-            currentResult = base * currentResult;
+            this.status = ( (float) i / this.exponent) * 100;
+            currentResult = this.base * currentResult;
         }
         this.result = currentResult;
     }
+
 
 
 }

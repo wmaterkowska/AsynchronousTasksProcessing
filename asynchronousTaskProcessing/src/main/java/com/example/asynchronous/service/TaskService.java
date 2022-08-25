@@ -2,6 +2,8 @@ package com.example.asynchronous.service;
 
 import com.example.asynchronous.data.Task;
 import com.example.asynchronous.data.TaskRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,11 @@ public class TaskService {
 
     public List<Task> getAllTasks() {
 
+        //updateTasks();
+        for (Task task : taskRepository.findAll()) {
+            updateStatus(task.getId(), task.getStatus());
+        }
+
         Iterable<Task> tasks = this.taskRepository.findAll();
         List<Task> taskList = new ArrayList<>();
         tasks.forEach(task ->{taskList.add(task);});
@@ -40,5 +47,17 @@ public class TaskService {
         newTask.calculateResult();
     }
 
+
+    private void updateTasks(){
+        for (Task task: taskRepository.findAll()) {
+            float currentStatus = task.getStatus();
+            task.setStatus(currentStatus);
+            task.setResult(2);
+        }
+    }
+
+    public void updateStatus(long id, float status) {
+        taskRepository.updateStatus(id, status);
+    }
 
 }
