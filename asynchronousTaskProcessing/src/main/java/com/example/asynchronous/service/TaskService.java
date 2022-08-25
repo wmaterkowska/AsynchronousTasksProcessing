@@ -53,6 +53,7 @@ public class TaskService {
             float currentStatus = task.getStatus();
             task.setStatus(currentStatus);
             task.setResult(2);
+
         }
     }
 
