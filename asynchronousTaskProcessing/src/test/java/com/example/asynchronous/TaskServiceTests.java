@@ -1,6 +1,5 @@
 package com.example.asynchronous;
 
-import com.example.asynchronous.data.Task;
 import com.example.asynchronous.service.TaskService;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -30,7 +29,7 @@ public class TaskServiceTests {
         int baseTest = 2;
         int exponentTest = 3;
         this.taskService.addTask(baseTest, exponentTest);
-        assertNotNull(this.taskService.listAllTasks());
+        assertNotNull(this.taskService.getAllTasks());
     }
 
 }
