@@ -1,9 +1,11 @@
 package com.example.asynchronous.data;
 
-import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 
@@ -13,7 +15,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EnableAsync
+//@EnableAsync
 public class Task {
 
     @Id
@@ -40,15 +42,18 @@ public class Task {
     public long getResult() {return this.result;}
 
 
-    @Async
-    public void calculateResult() throws InterruptedException {
+    //@Async
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void calculateResult(final TaskRepository taskRepository) throws InterruptedException {
         long currentResult = 1;
         for (int i = 1; i <= this.exponent; i++){
             Thread.sleep(1000);
             this.status = ( (float) i / this.exponent) * 100;
             currentResult = this.base * currentResult;
+            taskRepository.save(this);
         }
         this.result = currentResult;
+        taskRepository.save(this);
     }
 
 

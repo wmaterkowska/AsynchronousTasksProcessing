@@ -6,7 +6,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,41 +14,25 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
 
-    private final List<Task> tasks;
-
-    public TaskService(TaskRepository taskRepository, List<Task> tasks) {
+    public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
-        this.tasks = tasks;
-    }
-
-    public List<Task> listAllTasks() {
-        return this.taskRepository.findAll();
     }
 
     public List<Task> getAllTasks() {
 
-        for (Task task : this.tasks) {
-            updateTask(task.getId(), task.getStatus(), task.getResult());
-        }
-
+        /*
         Iterable<Task> tasks = this.taskRepository.findAll();
         List<Task> taskList = new ArrayList<>();
         tasks.forEach(task ->{taskList.add(task);});
-
         return taskList;
+        */
+        return this.taskRepository.findAll();
     }
 
     @Async
     public void addTask(int base, int exponent) throws InterruptedException {
         final Task newTask = Task.builder().base(base).exponent(exponent).build();
         this.taskRepository.save(newTask);
-        this.tasks.add(newTask);
-
-        newTask.calculateResult();
+        newTask.calculateResult(this.taskRepository);
     }
-
-    public void updateTask(long id, float status, long result) {
-        taskRepository.updateTask(id, status, result);
-    }
-
 }
