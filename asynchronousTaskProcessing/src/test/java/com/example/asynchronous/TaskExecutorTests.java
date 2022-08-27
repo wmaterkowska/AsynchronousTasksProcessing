@@ -2,6 +2,7 @@ package com.example.asynchronous;
 
 import com.example.asynchronous.data.Task;
 import com.example.asynchronous.data.TaskExecutor;
+import com.example.asynchronous.data.TaskRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -13,26 +14,29 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TaskExecutorTests {
 
     @Mock
-    private TaskExecutor taskExecutor;
+    private TaskRepository taskRepository;
 
     @Test
     public void calculateResultTest() throws InterruptedException {
         Task task = Task.builder().base(2).exponent(3).build();
-        this.taskExecutor.calculateResult();
+        TaskExecutor taskExecutor = new TaskExecutor(task, taskRepository);
+        taskExecutor.calculateResult(task);
         assertEquals(8, task.getResult());
     }
 
     @Test
     public void calculateResultTestWithExponentZero() throws InterruptedException {
         Task task = Task.builder().base(2).exponent(0).build();
-        this.taskExecutor.calculateResult();
+        TaskExecutor taskExecutor = new TaskExecutor(task, taskRepository);
+        taskExecutor.calculateResult(task);
         assertEquals(1, task.getResult());
     }
 
     @Test
     public void calculateResultTestWithBaseZero() throws InterruptedException {
         Task task = Task.builder().base(0).exponent(15).build();
-        this.taskExecutor.calculateResult();
+        TaskExecutor taskExecutor = new TaskExecutor(task, taskRepository);
+        taskExecutor.calculateResult(task);
         assertEquals(0, task.getResult());
     }
 

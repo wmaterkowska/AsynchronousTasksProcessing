@@ -14,7 +14,7 @@ import java.util.List;
 public class TaskService {
 
     private final TaskRepository taskRepository;
-    
+
     public List<Task> getAllTasks() {
 
         /*
@@ -33,6 +33,6 @@ public class TaskService {
 
         final TaskExecutor newTaskExecutor = new TaskExecutor(newTask , this.taskRepository);
 
-        newTaskExecutor.calculateResult();
+        newTaskExecutor.calculateResult(newTask);
     }
 }
