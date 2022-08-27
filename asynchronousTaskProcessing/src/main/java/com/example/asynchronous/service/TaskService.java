@@ -31,7 +31,7 @@ public class TaskService {
         final Task newTask = Task.builder().base(base).exponent(exponent).build();
         this.taskRepository.save(newTask);
 
-        final TaskExecutor newTaskExecutor = new TaskExecutor(newTask , this.taskRepository);
+        final TaskExecutor newTaskExecutor = new TaskExecutor(this.taskRepository);
 
         newTaskExecutor.calculateResult(newTask);
     }

@@ -19,7 +19,7 @@ public class TaskExecutorTests {
     @Test
     public void calculateResultTest() throws InterruptedException {
         Task task = Task.builder().base(2).exponent(3).build();
-        TaskExecutor taskExecutor = new TaskExecutor(task, taskRepository);
+        TaskExecutor taskExecutor = new TaskExecutor(taskRepository);
         taskExecutor.calculateResult(task);
         assertEquals(8, task.getResult());
     }
@@ -27,7 +27,7 @@ public class TaskExecutorTests {
     @Test
     public void calculateResultTestWithExponentZero() throws InterruptedException {
         Task task = Task.builder().base(2).exponent(0).build();
-        TaskExecutor taskExecutor = new TaskExecutor(task, taskRepository);
+        TaskExecutor taskExecutor = new TaskExecutor(taskRepository);
         taskExecutor.calculateResult(task);
         assertEquals(1, task.getResult());
     }
@@ -35,7 +35,7 @@ public class TaskExecutorTests {
     @Test
     public void calculateResultTestWithBaseZero() throws InterruptedException {
         Task task = Task.builder().base(0).exponent(15).build();
-        TaskExecutor taskExecutor = new TaskExecutor(task, taskRepository);
+        TaskExecutor taskExecutor = new TaskExecutor(taskRepository);
         taskExecutor.calculateResult(task);
         assertEquals(0, task.getResult());
     }
