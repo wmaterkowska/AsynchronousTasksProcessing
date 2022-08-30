@@ -19,7 +19,6 @@ public class RequestMethodTests {
     @Autowired
     private MockMvc mockMvc;
 
-
     @Test
     public void getTasksHtmlTest() throws Exception{
         this.mockMvc.perform(MockMvcRequestBuilders

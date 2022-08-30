@@ -19,8 +19,8 @@ public class TaskServiceTests {
 
     @Test
     @Order(1)
-    public void listAllTasksTest() {
-        assertTrue(this.taskService.listAllTasks().isEmpty());
+    public void getAllTasksTest() {
+        assertTrue(this.taskService.getAllTasks().isEmpty());
     }
 
     @Test

@@ -1,22 +1,19 @@
 package com.example.asynchronous.service;
 
 import com.example.asynchronous.data.Task;
+import com.example.asynchronous.data.TaskExecutor;
 import com.example.asynchronous.data.TaskRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@EnableAsync
+@RequiredArgsConstructor
 public class TaskService {
 
     private final TaskRepository taskRepository;
-
-    public TaskService(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
-    }
 
     public List<Task> getAllTasks() {
 
@@ -33,6 +30,9 @@ public class TaskService {
     public void addTask(int base, int exponent) throws InterruptedException {
         final Task newTask = Task.builder().base(base).exponent(exponent).build();
         this.taskRepository.save(newTask);
-        newTask.calculateResult(this.taskRepository);
+
+        final TaskExecutor newTaskExecutor = new TaskExecutor(this.taskRepository);
+
+        newTaskExecutor.calculateResult(newTask);
     }
 }
