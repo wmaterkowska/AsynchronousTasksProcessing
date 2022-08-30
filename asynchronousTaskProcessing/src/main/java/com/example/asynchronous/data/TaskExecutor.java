@@ -1,16 +1,16 @@
 package com.example.asynchronous.data;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class TaskExecutor {
 
-    private TaskRepository taskRepository;
+    private final TaskRepository taskRepository;
 
+    public TaskExecutor(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void calculateResult(Task task) throws InterruptedException {

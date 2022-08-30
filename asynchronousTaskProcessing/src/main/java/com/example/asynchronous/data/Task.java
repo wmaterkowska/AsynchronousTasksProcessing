@@ -1,5 +1,6 @@
 package com.example.asynchronous.data;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -10,8 +11,8 @@ import javax.persistence.*;
 @Entity
 @Table
 @ToString
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class Task {
 

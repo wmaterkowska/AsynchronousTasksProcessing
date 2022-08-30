@@ -3,14 +3,14 @@ package com.example.asynchronous.service;
 import com.example.asynchronous.data.Task;
 import com.example.asynchronous.data.TaskExecutor;
 import com.example.asynchronous.data.TaskRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class TaskService {
 
     private final TaskRepository taskRepository;
