@@ -1,9 +1,5 @@
 package com.example.asynchronous.data;
 
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-
 public class TaskExecutor {
 
     private final TaskRepository taskRepository;
@@ -12,7 +8,6 @@ public class TaskExecutor {
         this.taskRepository = taskRepository;
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void calculateResult(Task task) throws InterruptedException {
         long currentResult = 1;
         for (int i = 1; i <= task.getExponent(); i++){

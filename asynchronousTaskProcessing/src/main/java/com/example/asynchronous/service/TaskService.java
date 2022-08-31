@@ -4,10 +4,11 @@ import com.example.asynchronous.data.Task;
 import com.example.asynchronous.data.TaskExecutor;
 import com.example.asynchronous.data.TaskRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @RequiredArgsConstructor
@@ -26,13 +27,20 @@ public class TaskService {
         return this.taskRepository.findAll();
     }
 
-    @Async
-    public void addTask(int base, int exponent) throws InterruptedException {
+
+    public void addTask(int base, int exponent) throws InterruptedException, ExecutionException {
         final Task newTask = Task.builder().base(base).exponent(exponent).build();
         this.taskRepository.save(newTask);
 
         final TaskExecutor newTaskExecutor = new TaskExecutor(this.taskRepository);
 
-        newTaskExecutor.calculateResult(newTask);
+        CompletableFuture<Void> future = new CompletableFuture<>().runAsync( ()-> {
+            try{
+                newTaskExecutor.calculateResult(newTask);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
     }
 }

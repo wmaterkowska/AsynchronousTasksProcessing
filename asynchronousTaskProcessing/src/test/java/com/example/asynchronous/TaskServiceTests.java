@@ -8,6 +8,8 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.concurrent.ExecutionException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -25,7 +27,7 @@ public class TaskServiceTests {
 
     @Test
     @Order(2)
-    public void addTaskTest() throws InterruptedException {
+    public void addTaskTest() throws InterruptedException, ExecutionException {
         int baseTest = 2;
         int exponentTest = 3;
         this.taskService.addTask(baseTest, exponentTest);

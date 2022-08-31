@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.concurrent.ExecutionException;
+
 
 @Controller
 @RequestMapping("/tasks")
@@ -27,7 +29,7 @@ public class TaskHtmlController {
 
 
     @RequestMapping(method = RequestMethod.POST)
-    public void addTask(@RequestParam(value = "base") Integer base, @RequestParam(value = "exponent") Integer exponent) throws InterruptedException {
+    public void addTask(@RequestParam(value = "base") Integer base, @RequestParam(value = "exponent") Integer exponent) throws InterruptedException, ExecutionException {
         this.taskService.addTask(base, exponent);
     }
 
