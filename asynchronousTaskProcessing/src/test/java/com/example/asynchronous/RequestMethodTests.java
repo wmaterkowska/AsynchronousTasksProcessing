@@ -1,6 +1,5 @@
 package com.example.asynchronous;
 
-import com.example.asynchronous.data.Task;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -27,16 +26,13 @@ public class RequestMethodTests {
                 .andExpect(status().isOk());
     }
 
-
     @Test
     public void addTaskHtmlTest() throws Exception {
-        Task task = Task.builder().id(1).base(2).exponent(3).build();
 
         mockMvc.perform(post("/tasks")
                         .param("base", "2")
                         .param("exponent", "3"))
                 .andDo(print()).andExpect(status().isOk());
-//
 
     }
 

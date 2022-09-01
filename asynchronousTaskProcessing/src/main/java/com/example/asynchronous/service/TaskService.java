@@ -37,8 +37,8 @@ public class TaskService {
 
     /**
      * add task to the database (initiate calculating of the result of the task)
-     * @param base
-     * @param exponent
+     * @param base integer
+     * @param exponent integer
      * @throws InterruptedException
      * @throws ExecutionException
      */
