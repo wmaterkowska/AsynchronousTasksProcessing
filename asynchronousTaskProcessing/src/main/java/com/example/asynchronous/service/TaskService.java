@@ -1,7 +1,6 @@
 package com.example.asynchronous.service;
 
 import com.example.asynchronous.data.Task;
-import com.example.asynchronous.data.TaskExecutor;
 import com.example.asynchronous.data.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 @Service
 @RequiredArgsConstructor
@@ -24,33 +22,26 @@ public class TaskService {
      */
     public List<Task> getAllTasks() {
 
-        /*
-        Iterable<Task> tasks = this.taskRepository.findAll();
-        List<Task> taskList = new ArrayList<>();
-        tasks.forEach(task ->{taskList.add(task);});
-        return taskList;
-        */
         log.info("list of tasks: " + this.taskRepository.findAll());
         return this.taskRepository.findAll();
     }
 
+    public void cleanRepository(){
+        this.taskRepository.deleteAll();
+    }
 
     /**
      * add task to the database (initiate calculating of the result of the task)
      * @param base integer
      * @param exponent integer
-     * @throws InterruptedException
-     * @throws ExecutionException
      */
-    public void addTask(int base, int exponent) throws InterruptedException, ExecutionException {
+    public void addTask(int base, int exponent) {
         final Task newTask = Task.builder().base(base).exponent(exponent).build();
         this.taskRepository.save(newTask);
 
-        final TaskExecutor newTaskExecutor = new TaskExecutor(this.taskRepository);
-
-        CompletableFuture<Void> future = new CompletableFuture<>().runAsync( ()-> {
+        new CompletableFuture<>().runAsync( ()-> {
             try{
-                newTaskExecutor.calculateResult(newTask);
+                this.calculateResult(newTask);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -58,6 +49,16 @@ public class TaskService {
         log.info("task added, calculating started");
     }
 
-
+    public void calculateResult(Task task) throws InterruptedException {
+        long currentResult = 1;
+        for (int i = 1; i <= task.getExponent(); i++){
+            Thread.sleep(1000);
+            task.setStatus( ((float) i / task.getExponent()) * 100);
+            currentResult = task.getBase() * currentResult;
+            taskRepository.save(task);
+        }
+        task.setResult(currentResult);
+        this.taskRepository.save(task);
+    }
 
 }
