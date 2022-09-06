@@ -27,7 +27,8 @@ public class TaskServiceTests {
 
     @Test
     @Order(2)
-    public void addTaskTest() throws InterruptedException, ExecutionException {
+    @SneakyThrow
+    public void addTaskTest() {
         int baseTest = 2;
         int exponentTest = 3;
         this.taskService.addTask(baseTest, exponentTest);
